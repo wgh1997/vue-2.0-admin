@@ -138,13 +138,13 @@ export default {
       //     {type:'danger',label:'删除',handle:(row,r)=>{console.log(row,r)}}
       //   ]},
       //   {label:'测试Input',type:'Input',prop:'input',focus:(row)=>{console.log(row)}},
-      //   {label:'测试html',type:'Html',prop:'input',html:(row)=>{
-      //        if(row.input==='1'){
-      //          return ('<p>我是1呀<p>')
-      //        }else{
-      //          return ('<p>我不是1呀<p>')
-      //        }
-      //   }},
+        // {label:'测试html',type:'Html',prop:'input',html:(row)=>{
+        //      if(row.input==='1'){
+        //        return ('<p>我是1呀<p>')
+        //      }else{
+        //        return ('<p>我不是1呀<p>')
+        //      }
+        // }},
       //   {label:'测试下拉框',type:'Select',prop:'value',props:'value',options:[{
       //     value: '选项1',
       //     label: '黄金糕'

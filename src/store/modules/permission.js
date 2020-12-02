@@ -36,6 +36,7 @@ export default {
   actions: {
     async FETCH_PERMISSION ({ commit, state }) {
       let permissionList = await fetchPermission()
+      console.log(permissionList,'我是获取的数据')
       commit('GET_MENU_BTN_LIST', permissionList.jurisdiction)
       /*  根据权限筛选出我们设置好的路由并加入到path=''的children */
       let routes = recursionRouter(permissionList.routing, dynamicRouter)

@@ -2,7 +2,6 @@
   <div class="clearfix"
        id="login_wrap">
     <canvas id="canvas"> 您的浏览器不支持canvas标签，请您更换浏览器 </canvas>
-
     <div id="login">
       <div class="login--account">
         <span>账号：</span>

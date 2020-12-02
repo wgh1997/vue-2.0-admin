@@ -2,10 +2,8 @@
   <div class="threeLevelMain"
        id="resumeId">
     <!-- <div> -->
-
     <!-- 报价容器 -->
     <div class="quoteContainer">
-
       <div class="quote_info clearfix">
         <h3 class="h3_title">报价单</h3>
         <div class="quote_itemBox">
@@ -217,7 +215,7 @@ export default {
       });
     },
     export2Excel () {
-      var that = this;
+      let that = this;
       require.ensure([], () => {
         const { export_json_to_excel } = require('./excel/expor2Excal.js'); //这里必须使用绝对路径
         const tHeader = ['序号', '设备名称', '数量', '销售单价', '销售合计', '备注',]; // 导出的表头名

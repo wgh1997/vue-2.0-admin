@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <button @click="cles2">阿斯达四大</button>
     <div id="gitgraph"></div>
   </div>
 </template>
@@ -12,6 +13,7 @@ import {
   Mode,
   GitgraphJS
 } from "@gitgraph/js";
+import {cles,cles4} from '../../api/permission'
 export default {
   name: "page",
   components: {},
@@ -253,10 +255,19 @@ export default {
   },
   props: {},
   watch: {},
-  methods: {},
+  methods: {
+    cles2(){
+      cles4().then(res=>{
+        console.log(res)
+      })
+    }
+  },
   computed: {},
   created() {},
   mounted() {
+    cles().then(res=>{
+      console.log(res)
+    })
     const graphContainer = document.getElementById("gitgraph");
     const gitgraph = createGitgraph(graphContainer, {
       /*options*/
