@@ -1,6 +1,5 @@
 <template>
   <div class="main-container">
-
     <TopAside />
     <Content />
   </div>

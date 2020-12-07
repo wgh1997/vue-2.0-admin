@@ -28,32 +28,22 @@ export default {
         author: '大叔大婶大所多群', id: 2, title: 'tit奥术大师大所多le'
       }],
       list2: [{
-        author: 'aa奥术大师大所多a', id: 1,
+        author: 'aa奥术大师大所多a', id: 3,
         title: '奥术大师大所多'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 4, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 5, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 6, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 7, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 8, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 9, title: 'tit奥术大师大所le'
       }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
-      }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
-      }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
-      }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
-      }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
-      }, {
-        author: 'bb奥术大师大所多b', id: 2, title: 'tit奥术大师大所le'
+        author: 'bb奥术大师大所多b', id: 10, title: 'tit奥术大师大所le'
       }]
     }
   },

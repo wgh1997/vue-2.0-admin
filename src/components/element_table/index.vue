@@ -172,7 +172,7 @@
             <el-image
               v-if="item.type === 'Image'"
               style="width: 100px; height: 100px"
-              fit="fit"
+              fit="contain"
               :src="scope.row[item.prop]"
               @click="item.handle && item.handle(scope.row)"
             />

@@ -4,7 +4,7 @@
            text-color="#eee"
            active-text-color="#4dbcff"
            :default-active="currentMenu">
-           {{currentMenu}}
+           <!-- {{currentMenu}} -->
     <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
   </el-menu>
 </template>

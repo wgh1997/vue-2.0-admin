@@ -15,16 +15,6 @@
             :group="group"
             class="kanban done"
             header-text="Done" />
-    <Kanban :key="3"
-            :list="list3"
-            :group="group"
-            class="kanban done"
-            header-text="Done" />
-    <Kanban :key="3"
-            :list="list3"
-            :group="group"
-            class="kanban done"
-            header-text="Done" />
 
   </div>
 
