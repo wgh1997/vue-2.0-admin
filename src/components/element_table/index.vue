@@ -2,142 +2,212 @@
 <template>
   <section class="ces-table-page">
     <!-- 表格操作按钮 -->
-    <section class="ces-handle"
-             v-if="isHandle">
-      <el-button v-for="(item,index) in tableHandles"
-                 :size="item.size || size"
-                 :type="item.type"
-                 :key="index"
-                 :icon="item.icon"
-                 @click="item.handle()">{{item.label}}</el-button>
+    <section class="ces-handle" v-if="isHandle">
+      <el-button
+        v-for="(item, index) in tableHandles"
+        :size="item.size || size"
+        :type="item.type"
+        :key="index"
+        :icon="item.icon"
+        @click="item.handle()"
+        >{{ item.label }}</el-button
+      >
     </section>
     <!-- 数据表格 -->
     <section class="ces-table">
-
-      <el-table :data="tableData.slice((pagination.pageNum-1)*pagination.pageSize,pagination.pageNum*pagination.pageSize)"
-                :size="size"
-                height="100%"
-                stripe
-                :border="isBorder"
-                @select="select"
-                @select-all="selectAll"
-                v-loading="loading"
-                :defaultSelections="defaultSelections"
-                ref="cesTable">
-        <el-table-column v-if="isSelection"
-                         type="selection"
-                         align="center"></el-table-column>
-        <el-table-column v-if="isIndex"
-                         type="index"
-                         :label="indexLabel"
-                         align="center"
-                         width="50"></el-table-column>
+      <el-table
+        :data="
+          tableData.slice(
+            (pagination.pageNum - 1) * pagination.pageSize,
+            pagination.pageNum * pagination.pageSize
+          )
+        "
+        :size="size"
+        height="100%"
+        stripe
+        :border="isBorder"
+        @select="select"
+        @select-all="selectAll"
+        v-loading="loading"
+        :defaultSelections="defaultSelections"
+        ref="cesTable"
+      >
+        <el-table-column
+          v-if="isSelection"
+          type="selection"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          v-if="isIndex"
+          type="index"
+          :label="indexLabel"
+          align="center"
+          width="50"
+        ></el-table-column>
         <!-- 数据栏 -->
-        <el-table-column v-for="item in tableCols"
-                         :sortable="item.sortable"
-                         :key="item.id"
-                         @click="item.handle(scope.row)"
-                         :prop="item.prop"
-                         :label="item.label"
-                         :width="item.width"
-                         :align="item.align"
-                         :render-header="item.require?renderHeader:null">
+        <el-table-column
+          v-for="item in tableCols"
+          :sortable="item.sortable"
+          :key="item.id"
+          @click="item.handle(scope.row)"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width"
+          :align="item.align"
+          :render-header="item.require ? renderHeader : null"
+        >
           <template slot-scope="scope">
             <!-- 跳转 -->
-            <span v-if="item.type==='All'"
-                  @click="item.handle(scope.row)"
-                  style="cursor: pointer; color: #007AFF;">{{scope.row.racName}}</span>
+            <span
+              v-if="item.type === 'Jump'"
+              @click="item.handle(scope.row)"
+              style="cursor: pointer; color: #007aff"
+              >{{ scope.row[item.prop]}}</span
+            >
             <!-- html -->
-            <span v-if="item.type==='Html'"
-                  v-html="item.html(scope.row)"></span>
-            <span v-if="item.type==='Ioc'">
+            <div
+              v-if="item.type === 'Html'"
+              v-html="item.html(scope.row)"
+            ></div>
+            <span v-if="item.type === 'Ioc'">
               <!-- 图标 -->
-              <i v-for="btn in item.btnList"
-                 v-if="!btn.isShow || (btn.isShow && btn.isShow(scope.row,btn.isDisabled))"
-                 :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                 :type="btn.type"
-                 :size="btn.size || size"
-                 :class="btn.icon"
-                 @click="btn.handle(scope.row)"></i>
+              <i
+                v-for="(btn, index) in item.btnList"
+                v-show="
+                  !btn.isShow ||
+                  (btn.isShow && btn.isShow(scope.row, btn.isDisabled))
+                "
+                :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
+                :type="btn.type"
+                :key="index"
+                :size="btn.size || size"
+                :class="btn.icon"
+                @click="btn.handle(scope.row)"
+              ></i>
             </span>
             <!-- 按钮 -->
-            <span v-if="item.type==='Button'">
-              <el-button v-for="btn in item.btnList"
-                         v-if="!btn.isShow || (btn.isShow && btn.isShow(scope.row,btn.isDisabled))"
-                         :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                         :type="btn.type"
-                         :size="btn.size || size"
-                         :icon="btn.icon"
-                         @click="btn.handle(scope.row)">{{btn.label}}</el-button>
+            <span v-if="item.type === 'Button'">
+              <el-button
+                v-for="(btn, index) in item.btnList"
+                v-show="
+                  !btn.isShow ||
+                  (btn.isShow && btn.isShow(scope.row, btn.isDisabled))
+                "
+                :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
+                :type="btn.type"
+                :key="index"
+                :size="btn.size || size"
+                :icon="btn.icon"
+                @click="btn.handle(scope.row)"
+                >{{ btn.label }}</el-button
+              >
             </span>
             <!-- 输入框 -->
-            <el-input v-if="item.type==='Input'"
-                      v-model="scope.row[item.prop]"
-                      :size="size"
-                      @focus="item.focus && item.focus(scope.row)"></el-input>
+            <el-input
+              v-if="item.type === 'Input'"
+              v-model="scope.row[item.prop]"
+              :size="size"
+              @focus="item.focus && item.focus(scope.row)"
+            ></el-input>
             <!-- 下拉框 -->
-            <el-select v-if="item.type==='Select'"
-                       v-model="scope.row[item.prop]"
-                       :size="size"
-                       :props="item.props"
-                       @change="item.change && item.change(scope.row,item.options,item.props.label)">
-              <el-option v-for="op in item.options"
-                         :label="op.label"
-                         :value="op.value"
-                         :key="op.value"></el-option>
+            <el-select
+              v-if="item.type === 'Select'"
+              v-model="scope.row[item.prop]"
+              :size="size"
+              :props="item.props"
+              @change="
+                item.change &&
+                  item.change(scope.row, item.options, item.props.label)
+              "
+            >
+              <el-option
+                v-for="op in item.options"
+                :label="op.label"
+                :value="op.value"
+                :key="op.value"
+              ></el-option>
             </el-select>
             <!-- 单选 -->
-            <el-radio-group v-if="item.type==='Radio'"
-                            v-model="scope.row[item.prop]"
-                            :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                            @change="item.change && item.change(scope.row)">
-              <el-radio v-for="ra in item.radios"
-                        :label="ra.value">{{ra.label}}</el-radio>
+            <el-radio-group
+              v-if="item.type === 'Radio'"
+              v-model="scope.row[item.prop]"
+              
+              @change="item.change && item.change(scope.row)"
+            >
+              <el-radio
+                v-for="(ra, index) in item.radios"
+                :key="index"
+                :label="ra.value"
+                >{{ ra.label }}</el-radio
+              >
             </el-radio-group>
             <!-- 复选框 -->
-            <el-checkbox-group v-if="item.type==='Checkbox'"
-                               v-model="scope.row[item.prop]"
-                               :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                               @change="item.change && item.change(scope.row)">
-              <el-checkbox v-for="ra in item.checkboxs"
-                           :label="ra.value">{{ra.label}}</el-checkbox>
+            <el-checkbox-group
+              v-if="item.type === 'Checkbox'"
+              v-model="scope.row[item.prop]"
+              
+              @change="item.change && item.change(scope.row)"
+            >
+              <el-checkbox
+                v-for="(ra, index) in item.checkboxs"
+                :key="index"
+                :label="ra.value"
+                >{{ ra.label }}</el-checkbox
+              >
             </el-checkbox-group>
             <!-- 评价 -->
-            <el-rate v-if="item.type==='Rate'"
-                     v-model="scope.row[item.prop]"
-                     :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                     @change="item.change && item.change(scope.row)"></el-rate>
+            <el-rate
+              v-if="item.type === 'Rate'"
+              v-model="scope.row[item.prop]"
+              
+              @change="item.change && item.change(scope.row)"
+            ></el-rate>
             <!-- 开关 -->
-            <el-switch v-if="item.type==='Switch'"
-                       v-model="scope.row[item.prop]"
-                       @change="item.change && item.change(scope.row)"></el-switch>
+            <el-switch
+              v-if="item.type === 'Switch'"
+              v-model="scope.row[item.prop]"
+              @change="item.change && item.change(scope.row)"
+            ></el-switch>
             <!-- 图像 -->
-            <img v-if="item.type==='Image'"
-                 :src="scope.row[item.prop]"
-                 @click="item.handle && item.handle(scope.row)" />
+            <el-image
+              v-if="item.type === 'Image'"
+              style="width: 100px; height: 100px"
+              fit="fit"
+              :src="scope.row[item.prop]"
+              @click="item.handle && item.handle(scope.row)"
+            />
             <!-- 滑块 -->
-            <el-slider v-if="item.type==='Slider'"
-                       v-model="scope.row[item.prop]"
-                       :disabled="btn.isDisabled && btn.isDisabled(scope.row)"
-                       @change="item.change && item.change(scope.row)"></el-slider>
+            <el-slider
+              v-if="item.type === 'Slider'"
+              v-model="scope.row[item.prop]"
+              
+              @change="item.change && item.change(scope.row)"
+            ></el-slider>
             <!-- 默认 -->
-            <span v-if="!item.type"
-                  :style="item.itemStyle && item.itemStyle(scope.row)"
-                  :class="item.itemClass && item.item.itemClass(scope.row)">{{(item.formatter && item.formatter(scope.row)) || scope.row[item.prop]}}</span>
+            <span
+              v-if="!item.type"
+              :style="item.itemStyle && item.itemStyle(scope.row)"
+              :class="item.itemClass && item.item.itemClass(scope.row)"
+              >{{
+                (item.formatter && item.formatter(scope.row)) ||
+                scope.row[item.prop]
+              }}</span
+            >
           </template>
         </el-table-column>
       </el-table>
     </section>
     <!-- 分页 -->
-    <section class="ces-pagination"
-             v-if="isPagination">
-      <el-pagination style="display: flex;justify-content: center;align-items: center;"
-                     @current-change="handleCurrentChange"
-                     @size-change="handleSizeChange"
-                     layout="prev, pager, next,jumper,total,sizes"
-                     :page-size="pagination.pageSize"
-                     :current-page="pagination.pageNum"
-                     :total="pagination.total"></el-pagination>
+    <section class="ces-pagination" v-if="isPagination">
+      <el-pagination
+        style="display: flex; justify-content: center; align-items: center"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="prev, pager, next,jumper,total,sizes"
+        :page-size="pagination.pageSize"
+        :current-page="pagination.pageNum"
+        :total="pagination.total"
+      ></el-pagination>
     </section>
   </section>
 </template>
@@ -167,24 +237,24 @@ export default {
     // 分页数据
     pagination: {
       type: Object,
-      default: () => ({ pageSize: 10, pageNum: 1, total: 0 })
-    }
+      default: () => ({ pageSize: 10, pageNum: 1, total: 0 }),
+    },
   },
   data() {
     return {};
   },
   watch: {
     defaultSelections(val) {
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         if (Array.isArray(val)) {
-          val.forEach(row => {
+          val.forEach((row) => {
             this.$refs.cesTable.toggleRowSelection(row);
           });
         } else {
           this.$refs.cesTable.toggleRowSelection(val);
         }
       });
-    }
+    },
   },
   methods: {
     // 表格勾选
@@ -213,8 +283,8 @@ export default {
     // }
     renderHeader(h, obj) {
       return h("span", { class: "ces-table-require" }, obj.column.label);
-    }
-  }
+    },
+  },
 };
 </script>
 

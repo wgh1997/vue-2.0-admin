@@ -14,7 +14,8 @@
                :tableData='tableData'
                :tableCols='tableCols'
                :tableHandles='tableHandles'
-               :pagination='pagination'>
+               :pagination='pagination'
+               :loading="table_loading">
     </ces-table>
   </div>
 </template>
@@ -57,10 +58,10 @@ export default {
       tableData: [
         {
           name: "张三",
-          age: "12",
+          age: 3.7,
           sex: "男",
           interst: "女",
-          input: "黄金糕",
+          input: 1,
           options: [
             {
               value: "选项1",
@@ -83,20 +84,49 @@ export default {
               label: "北京烤鸭"
             }
           ],
-          value: ""
+          value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"
         },
-        { name: "筱华", age: "27", sex: "女", interst: "羽毛球", input: "1" },
-        { name: "张三", age: "12", sex: "男", interst: "女", input: "1" },
-        { name: "筱华", age: "27", sex: "女", interst: "羽毛球", input: "1" },
-        { name: "筱华", age: "27", sex: "女", interst: "羽毛球", input: "1" },
-        { name: "筱华", age: "27", sex: "女", interst: "羽毛球", input: "1" },
-        { name: "筱华", age: "27", sex: "女", interst: "羽毛球", input: "1" }
+        { name: "筱华", age: 1, sex: "女", interst: "羽毛球", input: "1" ,sse:true,hua:1,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"},
+        { name: "张三", age: 3.7, sex: "男", interst: "女", input: "1" ,sse:false,hua:20,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"},
+        { name: "筱华", age: 3.7, sex: "女", interst: "羽毛球", input: "1" ,sse:false,hua:1,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"},
+        { name: "筱华", age: 3.7, sex: "女", interst: "羽毛球", input: "1" ,sse:false,hua:1,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"},
+        { name: "筱华", age: 3.7, sex: "女", interst: "羽毛球", input: "1" ,sse:false,hua:1,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"},
+        { name: "筱华", age: 3.7, sex: "女", interst: "羽毛球", input: "1" ,sse:false,hua:1,value: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg"}
       ],
       tableCols: [
-        { label: "姓名", prop: "name", sortable: "sortable" },
-        { label: "年龄", prop: "age" },
-        { label: "性别", prop: "sex" },
-        { label: "爱好", prop: "interst" },
+        {label:'跳转',type:'Jump',prop:'input',focus:(row)=>{console.log(row)},width:80},
+        {label:'下拉框',type:'Select',prop:'input',props:'value',width:120,options:[{
+          value: '1',
+          label: '黄金糕'
+        }, {
+          value: '2',
+          label: '双皮奶'
+        }, {
+          value: '3',
+          label: '蚵仔煎'
+        }, {
+          value: '4',
+          label: '龙须面'
+        }, {
+          value: '5',
+          label: '北京烤鸭'
+        }],change:(row,i,v)=>{
+             console.log(row,i,v)
+
+        }},
+        {label:'html',type:'Html',width:80,prop:'input',html:(row)=>{
+             if(row.input==='1'){
+               return ('<el-tag type="success">我是1</el-tag>')
+             }else{
+               return ('<el-tag type="info">我是2</el-tag>')
+             }
+        }},
+          {label:'Input',type:'Input',prop:'input',width:80,focus:(row)=>{console.log(row)}},
+          {label:'单选',type:'Radio',prop:'input',width:160,change:(row)=>{console.log(row)},radios:[{value:'1',label:'我是'},{value:'2',label:'我是'}]},
+           {label:'评价',type:'Rate',prop:'age',width:160,change:(row)=>{console.log(row)}},
+           {label:'开关',type:'Switch',prop:'sse',width:160,change:(row)=>{console.log(row)}},
+            {label:'图片',type:'Image',prop:'value',width:160,change:(row)=>{console.log(row)}},
+           {label:'滑块',type:'Slider',prop:'hua',width:160,change:(row)=>{console.log(row)}},
         {
           label: "操作",
           type: "Button",
@@ -145,25 +175,25 @@ export default {
         //        return ('<p>我不是1呀<p>')
         //      }
         // }},
-      //   {label:'测试下拉框',type:'Select',prop:'value',props:'value',options:[{
-      //     value: '选项1',
-      //     label: '黄金糕'
-      //   }, {
-      //     value: '选项2',
-      //     label: '双皮奶'
-      //   }, {
-      //     value: '选项3',
-      //     label: '蚵仔煎'
-      //   }, {
-      //     value: '选项4',
-      //     label: '龙须面'
-      //   }, {
-      //     value: '选项5',
-      //     label: '北京烤鸭'
-      //   }],change:(row,i,v)=>{
-      //        console.log(row,i,v)
+        // {label:'测试下拉框',type:'Select',prop:'value',props:'value',options:[{
+        //   value: '选项1',
+        //   label: '黄金糕'
+        // }, {
+        //   value: '选项2',
+        //   label: '双皮奶'
+        // }, {
+        //   value: '选项3',
+        //   label: '蚵仔煎'
+        // }, {
+        //   value: '选项4',
+        //   label: '龙须面'
+        // }, {
+        //   value: '选项5',
+        //   label: '北京烤鸭'
+        // }],change:(row,i,v)=>{
+        //      console.log(row,i,v)
 
-      //   }},
+        // }},
       // ],
       // tableHandles:[
       //   {label:'新增',type:'primary',handle:row=>{
@@ -175,13 +205,22 @@ export default {
         pageSize: 10,
         pageNum: 1,
         total: 7
-      }
+      },
+      table_loading:true
     };
   },
   components: {
     cesTable
     // SearchForm
-  }
+  },
+  mounted () {
+    let _this = this
+    window.setTimeout(function (){
+      alert(2222)
+        _this.table_loading = false
+    },3000);
+  },
+  
 };
 </script>
 
